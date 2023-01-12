@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shopify_app/main_screens/customer_screen.dart';
+import 'package:shopify_app/app/presentation/main_screens/customer_screen.dart';
 
 void main() {
   runApp(const ShopifyApp());
