@@ -4,8 +4,8 @@ import 'package:shopify_app/app/presentation/widgets/category_widgets/slider_wid
 import 'package:shopify_app/app/presentation/widgets/category_widgets/sub_category_model.dart';
 import 'package:shopify_app/app/utilities/categ_list.dart';
 
-class MenCategory extends StatelessWidget {
-  const MenCategory({Key? key}) : super(key: key);
+class BeautyCategory extends StatelessWidget {
+  const BeautyCategory({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,20 +14,20 @@ class MenCategory extends StatelessWidget {
         Positioned(
             child: Column(
           children: [
-            const CategoryHeaderLabel(headerLabel: 'Men'),
+            const CategoryHeaderLabel(headerLabel: 'Beauty'),
             Expanded(
               child: GridView.count(
                 mainAxisSpacing: 70,
                 crossAxisSpacing: 15,
-                crossAxisCount: 3,
+                crossAxisCount: 2,
                 children: List.generate(
-                  men.length,
+                  beauty.length,
                   (index) {
                     return SubCategoryModel(
-                      mainCategoryName: 'men',
-                      subCategoryName: men[index],
-                      assetName: 'images/men/men$index.jpg',
-                      subCategoryLabel: men[index],
+                      mainCategoryName: 'beauty',
+                      subCategoryName: beauty[index],
+                      assetName: 'images/beauty/beauty$index.jpg',
+                      subCategoryLabel: beauty[index],
                     );
                   },
                 ),
@@ -38,7 +38,7 @@ class MenCategory extends StatelessWidget {
         const Positioned(
           bottom: 0,
           right: 0,
-          child: SliderWidget(mainSliderText: 'men'),
+          child: SliderWidget(mainSliderText: 'beauty'),
         ),
       ],
     );

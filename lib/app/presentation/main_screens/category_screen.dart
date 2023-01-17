@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shopify_app/app/categories/accessories_category.dart';
+import 'package:shopify_app/app/categories/bags_category.dart';
+import 'package:shopify_app/app/categories/beauty_category.dart';
+import 'package:shopify_app/app/categories/electronics_category.dart';
+import 'package:shopify_app/app/categories/home_garden_category.dart';
+import 'package:shopify_app/app/categories/kids_category.dart';
 import 'package:shopify_app/app/categories/men_category.dart';
+import 'package:shopify_app/app/categories/shoes_category.dart';
 import 'package:shopify_app/app/categories/women_category.dart';
 import 'package:shopify_app/app/presentation/widgets/fake_search_widget.dart';
 
@@ -23,6 +30,17 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  @override
+  void initState() {
+    for (var element in items) {
+      element.isSelected = true;
+    }
+    setState(() {
+      items[0].isSelected = false;
+    });
+    super.initState();
+  }
+
   final _pageController = PageController();
   @override
   Widget build(BuildContext context) {
@@ -34,7 +52,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           title: const FakeSearchWidget()),
       body: Stack(children: [
         Positioned(bottom: 0, left: 0, child: sideNavigator(size)),
-        Positioned(bottom: 0, right: 0, child: categoryView(size))
+        Positioned(bottom: 0, right: 0, child: categoryView(size)),
       ]),
     );
   }
@@ -79,18 +97,26 @@ class _CategoryScreenState extends State<CategoryScreen> {
       height: size.height * 0.8,
       width: size.width * 0.8,
       child: PageView(
+        onPageChanged: (tandalganSidebar) {
+          for (var sideBarIndex in items) {
+            sideBarIndex.isSelected = false;
+          }
+          setState(() {
+            items[tandalganSidebar].isSelected = true;
+          });
+        },
         controller: _pageController,
         scrollDirection: Axis.vertical,
         children: const [
           MenCategory(),
           WomenCategory(),
-          Center(child: Text('shoes category')),
-          Center(child: Text('bags category')),
-          Center(child: Text('electronics category')),
-          Center(child: Text('accessories category')),
-          Center(child: Text('home & garden category')),
-          Center(child: Text('kids category')),
-          Center(child: Text('beuaty category')),
+          ShoesCategory(),
+          BagsCategory(),
+          ElectronicsCategory(),
+          AccessoriesCategory(),
+          HomeGardenCategory(),
+          KidsCategory(),
+          BeautyCategory(),
         ],
       ),
     );
