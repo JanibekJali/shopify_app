@@ -82,6 +82,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 color: items[index].isSelected == true
                     ? Colors.white
                     : Colors.grey.shade300,
+                // color:  if(items[index].isSelected )Colors.white else
                 child: Center(
                   child: Text(items[index].label),
                 ),
