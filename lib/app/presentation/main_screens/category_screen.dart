@@ -33,10 +33,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     for (var element in items) {
-      element.isSelected = true;
+      element.isSelected = false;
     }
     setState(() {
-      items[0].isSelected = false;
+      items[0].isSelected = true;
     });
     super.initState();
   }
@@ -78,7 +78,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     curve: Curves.bounceInOut);
               },
               child: Container(
-                height: 100,
+                height: 70,
                 color: items[index].isSelected == true
                     ? Colors.white
                     : Colors.grey.shade300,

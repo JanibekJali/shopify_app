@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shopify_app/app/presentation/main_screens/cart_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/category_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/home_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/profile_screen.dart';
+import 'package:shopify_app/app/presentation/main_screens/store_screen.dart';
 
 class CustomerScreen extends StatefulWidget {
   const CustomerScreen({Key? key}) : super(key: key);
@@ -15,8 +17,8 @@ class _CustomerScreenState extends State<CustomerScreen> {
   final List<Widget> _tabs = [
     const HomeScreen(),
     const CategoryScreen(),
-    const Center(child: Text('Profile Screen')),
-    const Center(child: Text('Profile Screen')),
+    StoreScreen(),
+    CartScreen(),
     const ProfileScreen(),
   ];
   @override
