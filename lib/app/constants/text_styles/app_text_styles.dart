@@ -7,6 +7,11 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
     letterSpacing: 1.5,
   );
+  static const TextStyle grey25W700 = TextStyle(
+    color: Colors.grey,
+    fontSize: 25,
+    fontWeight: FontWeight.w700,
+  );
 
   static const TextStyle black28Acme = TextStyle(
     fontSize: 28,
