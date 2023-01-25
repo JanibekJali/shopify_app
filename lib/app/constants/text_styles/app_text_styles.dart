@@ -38,4 +38,9 @@ class AppTextStyles {
     fontSize: 10.0,
     color: Colors.black,
   );
+  static const TextStyle Black12Bold = TextStyle(
+    fontSize: 12.0,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
 }
