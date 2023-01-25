@@ -19,4 +19,10 @@ class AppTextStyles {
     fontFamily: 'Acme',
     letterSpacing: 1.5,
   );
+  static const TextStyle black2 = TextStyle(
+    fontSize: 28,
+    color: Colors.black,
+    fontFamily: 'Acme',
+    letterSpacing: 1.5,
+  );
 }
