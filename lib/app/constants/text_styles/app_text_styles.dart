@@ -19,6 +19,7 @@ class AppTextStyles {
     fontFamily: 'Acme',
     letterSpacing: 1.5,
   );
+
   static const TextStyle blue20 = TextStyle(
     fontSize: 20.0,
     color: Colors.blue,
@@ -43,4 +44,12 @@ class AppTextStyles {
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
+
+  static const TextStyle black2 = TextStyle(
+    fontSize: 28,
+    color: Colors.black,
+    fontFamily: 'Acme',
+    letterSpacing: 1.5,
+  );
+
 }
