@@ -47,6 +47,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         constraints: BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               AnimatedTextKit(
                 repeatForever: true,
@@ -113,7 +114,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 6,
+                  ),
                   Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
                     decoration: BoxDecoration(
                       color: Colors.white38,
                       borderRadius: BorderRadius.only(
@@ -158,7 +163,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                     ),
                     YellowButtonWidget(
                       label: 'Sign Up',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, '/customer_register');
+                      },
                       width: 0.25,
                     ),
                     AnimatedLogoWidget(controller: _controller),
