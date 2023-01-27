@@ -46,10 +46,10 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle black2 = TextStyle(
-    fontSize: 28,
-    color: Colors.black,
-    fontFamily: 'Acme',
-    letterSpacing: 1.5,
-  );
+  static const TextStyle yellowAccent24w600Acme = TextStyle(
+      fontSize: 24.0,
+      color: AppColors.yellowAccent,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 2,
+      fontFamily: 'Acme');
 }
