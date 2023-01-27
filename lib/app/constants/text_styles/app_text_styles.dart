@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopify_app/app/constants/colors/app_colors.dart';
 
 class AppTextStyles {
   static const TextStyle brown16Bold = TextStyle(
@@ -20,9 +21,10 @@ class AppTextStyles {
     letterSpacing: 1.5,
   );
 
-  static const TextStyle blue20 = TextStyle(
-    fontSize: 20.0,
-    color: Colors.blue,
+  static const TextStyle purple15Bold = TextStyle(
+    color: AppColors.purple,
+    fontWeight: FontWeight.bold,
+    fontSize: 15.0,
   );
   static const TextStyle Red25Acme = TextStyle(
     fontSize: 25.0,
@@ -35,13 +37,12 @@ class AppTextStyles {
     color: Colors.white,
     fontWeight: FontWeight.bold,
   );
-  static const TextStyle Black10 = TextStyle(
-    fontSize: 10.0,
-    color: Colors.black,
+  static const TextStyle white20 = TextStyle(
+    fontSize: 20.0,
+    color: AppColors.white,
   );
-  static const TextStyle Black12Bold = TextStyle(
-    fontSize: 12.0,
-    color: Colors.black,
+  static const TextStyle Bold40 = TextStyle(
+    fontSize: 40.0,
     fontWeight: FontWeight.bold,
   );
 
@@ -51,5 +52,4 @@ class AppTextStyles {
     fontFamily: 'Acme',
     letterSpacing: 1.5,
   );
-
 }
