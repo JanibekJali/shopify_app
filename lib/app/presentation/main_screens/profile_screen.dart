@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shopify_app/app/presentation/customer_screens/customer_order_screen.dart';
+import 'package:shopify_app/app/presentation/customer_screens/customer_wishlist_screen.dart';
+import 'package:shopify_app/app/presentation/main_screens/cart_screen.dart';
 import 'package:shopify_app/app/presentation/widgets/profile_widgets/profile_header_label_widget.dart';
 import 'package:shopify_app/app/presentation/widgets/profile_widgets/repeated_list_tile_widget.dart';
 import 'package:shopify_app/app/presentation/widgets/profile_widgets/yellow_divider_widget.dart';
@@ -100,7 +103,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => CartScreen()));
+                              },
                               child: SizedBox(
                                 height: 40,
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -120,7 +128,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             color: Colors.yellow,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CustomerOrderScreen()));
+                              },
                               child: SizedBox(
                                 height: 40,
                                 width: MediaQuery.of(context).size.width * 0.2,
@@ -148,7 +162,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CustomerWishlistScreen()));
+                              },
                               child: SizedBox(
                                 height: 40,
                                 width: MediaQuery.of(context).size.width * 0.2,

@@ -15,11 +15,9 @@ class ShopifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: CustomerScreen(),
+      home: CustomerRegister(),
 
       // initialRoute: '/welcome_screen',
-      // initialRoute: '/customer_screen',
-      initialRoute: '/supplier_home_screen',
       routes: {
         '/welcome_screen': (context) => WelcomeScreen(),
         '/customer_screen': (context) => CustomerScreen(),
