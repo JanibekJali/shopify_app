@@ -132,7 +132,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         AnimatedLogoWidget(controller: _controller),
                         YellowButtonWidget(
                           label: 'Log In',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/supplier_home_screen');
+                          },
                           width: 0.25,
                         ),
                         YellowButtonWidget(
@@ -158,7 +161,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   children: [
                     YellowButtonWidget(
                       label: 'Log In',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, '/customer_screen');
+                      },
                       width: 0.25,
                     ),
                     YellowButtonWidget(

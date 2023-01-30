@@ -2,21 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:shopify_app/app/constants/colors/app_colors.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
-  const TextFormFieldWidget({
+  TextFormFieldWidget({
     Key? key,
     required this.hintText,
+    required this.labelText,
+    required this.keyBoardType,
+    required this.validator,
+    required this.onChanged,
+    this.widget,
+    this.obscureText = false,
   }) : super(key: key);
+  final Function(String)? onChanged;
   final String hintText;
-
+  final String labelText;
+  final Widget? widget;
+  final bool obscureText;
+  final TextInputType keyBoardType;
+  final String? Function(String?)? validator;
+  TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged,
+      validator: validator,
+      keyboardType: keyBoardType,
+      obscureText: obscureText,
       decoration: InputDecoration(
+        suffixIcon: widget,
+        labelText: labelText,
         hintText: hintText,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(25),
           borderSide: BorderSide(
-            color: AppColors.deepPurpleAccent,
+            color: AppColors.purple,
             width: 2,
           ),
         ),
