@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:shopify_app/app/presentation/auth/customer_register.dart';
+import 'package:shopify_app/app/presentation/auth/customer_register_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/customer_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/supplier_home_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/welcome_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const ShopifyApp());
 }
 
@@ -15,14 +18,14 @@ class ShopifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CustomerRegister(),
+      // home: CustomerRegisterScreen(),
 
-      // initialRoute: '/welcome_screen',
+      initialRoute: '/welcome_screen',
       routes: {
         '/welcome_screen': (context) => WelcomeScreen(),
         '/customer_screen': (context) => CustomerScreen(),
         '/supplier_home_screen': (context) => SupplierHomeScreen(),
-        '/customer_register': (context) => CustomerRegister(),
+        '/customer_register': (context) => CustomerRegisterScreen(),
       },
     );
   }
