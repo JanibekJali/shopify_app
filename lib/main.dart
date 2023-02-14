@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shopify_app/app/presentation/auth/customer_login.dart';
 import 'package:shopify_app/app/presentation/auth/customer_signup.dart';
+import 'package:shopify_app/app/presentation/auth/supplier_login.dart';
+import 'package:shopify_app/app/presentation/auth/supplier_signup.dart';
 import 'package:shopify_app/app/presentation/main_screens/customer_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/supplier_home_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/welcome_screen.dart';
@@ -25,7 +28,10 @@ class ShopifyApp extends StatelessWidget {
         '/welcome_screen': (context) => WelcomeScreen(),
         '/customer_screen': (context) => CustomerScreen(),
         '/supplier_home_screen': (context) => SupplierHomeScreen(),
-        '/customer_register': (context) => CustomerSignUp(),
+        '/customer_signup': (context) => CustomerSignUp(),
+        '/customer_login': (context) => CustomerLogin(),
+        '/supplier_signup': (context) => SuppliersSignUp(),
+        '/supplier_login': (context) => SuppliersLogin(),
       },
     );
   }
