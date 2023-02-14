@@ -15,20 +15,20 @@ import 'package:shopify_app/app/presentation/widgets/auth_widgets/text_form_fiel
 import 'auth_widgets/auth_main_button_widget.dart';
 import 'auth_widgets/snack_bar_widget/my_message_handler.dart';
 
-class CustomerSignUp extends StatefulWidget {
-  const CustomerSignUp({Key? key}) : super(key: key);
+class SuppliersSignUp extends StatefulWidget {
+  const SuppliersSignUp({Key? key}) : super(key: key);
 
   @override
-  _CustomerSignUpState createState() => _CustomerSignUpState();
+  _SuppliersSignUpState createState() => _SuppliersSignUpState();
 }
 
-class _CustomerSignUpState extends State<CustomerSignUp> {
+class _SuppliersSignUpState extends State<SuppliersSignUp> {
   final ImagePicker _picker = ImagePicker();
-  late String _name;
+  late String _storeName;
   late String _email;
   late String _password;
   late String _uid;
-  late String _profileImage;
+  late String _storeLogo;
 
   bool processing = false;
 
@@ -77,8 +77,8 @@ class _CustomerSignUpState extends State<CustomerSignUp> {
     }
   }
 
-  CollectionReference customers =
-      FirebaseFirestore.instance.collection('customers');
+  CollectionReference suppliers =
+      FirebaseFirestore.instance.collection('suppliers');
   void signUp() async {
     setState(() {
       processing = true;
@@ -92,20 +92,20 @@ class _CustomerSignUpState extends State<CustomerSignUp> {
           );
           firebase_storage.Reference ref = firebase_storage
               .FirebaseStorage.instance
-              .ref('cust-images/$_email.jpg');
+              .ref('suppliers-images/$_email.jpg');
           await ref.putFile(File(_imageFile!.path));
-          _profileImage = await ref.getDownloadURL();
+          _storeLogo = await ref.getDownloadURL();
           _uid = FirebaseAuth.instance.currentUser!.uid;
-          customers.doc(_uid).set({
-            'name': _name,
+          suppliers.doc(_uid).set({
+            'name': _storeName,
             'email': _email,
             'phone': '',
             'address': '',
-            'profileImage': _profileImage,
+            'profileImage': _storeLogo,
             'cid': _uid,
           });
 
-          Navigator.pushReplacementNamed(context, '/customer_login');
+          Navigator.pushReplacementNamed(context, '/supplier_login');
           _formKey.currentState!.reset();
           setState(() {
             _imageFile = null;
@@ -245,8 +245,7 @@ class _CustomerSignUpState extends State<CustomerSignUp> {
                         children: [
                           TextFormFieldWidget(
                             onChanged: (value) {
-                              _name = value;
-                              log(_name);
+                              _storeName = value;
                             },
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -316,7 +315,7 @@ class _CustomerSignUpState extends State<CustomerSignUp> {
                             onTap: () {
                               Navigator.pushReplacementNamed(
                                 context,
-                                '/customer_login',
+                                '/supplier_login',
                               );
                             },
                             actionLabel: 'Log In',

@@ -135,13 +135,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                           label: 'Log In',
                           onTap: () {
                             Navigator.pushReplacementNamed(
-                                context, '/supplier_home_screen');
+                                context, '/supplier_login');
                           },
                           width: 0.25,
                         ),
                         YellowButtonWidget(
                           label: 'Sign Up',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/supplier_signup');
+                          },
                           width: 0.25,
                         ),
                       ],
@@ -164,7 +167,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       label: 'Log In',
                       onTap: () {
                         Navigator.pushReplacementNamed(
-                            context, '/customer_screen');
+                            context, '/customer_login');
                       },
                       width: 0.25,
                     ),
@@ -172,7 +175,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       label: 'Sign Up',
                       onTap: () {
                         Navigator.pushReplacementNamed(
-                            context, '/customer_register');
+                            context, '/customer_signup');
                       },
                       width: 0.25,
                     ),
@@ -209,8 +212,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                       onPressed: () async {
                         try {
-                          final userCredential =
-                              await FirebaseAuth.instance.signInAnonymously();
+                          await FirebaseAuth.instance.signInAnonymously();
                           print("Signed in with temporary account.");
                         } on FirebaseAuthException catch (e) {
                           switch (e.code) {

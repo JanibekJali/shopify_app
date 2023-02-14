@@ -14,13 +14,11 @@ class SupplierHomeScreen extends StatefulWidget {
 class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
   int _selectedIndex = 0;
   final List<Widget> _tabs = [
-    const HomeScreen(),
-    const CategoryScreen(),
+    HomeScreen(),
+    CategoryScreen(),
     StoreScreen(),
     DashboardScreen(),
-    Center(
-      child: Text('upload'),
-    ),
+    Center(child: Text('upload')),
   ];
   @override
   Widget build(BuildContext context) {

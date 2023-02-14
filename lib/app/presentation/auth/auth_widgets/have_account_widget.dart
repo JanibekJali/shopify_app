@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+import 'package:shopify_app/app/constants/text_styles/app_text_styles.dart';
+
+class HaveAccountWidget extends StatelessWidget {
+  const HaveAccountWidget({
+    super.key,
+    required this.haveAccount,
+    required this.onTap,
+    required this.actionLabel,
+  });
+  final String haveAccount;
+  final Function() onTap;
+  final String actionLabel;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(
+          haveAccount,
+          style: AppTextStyles.black16Italic,
+        ),
+        SizedBox(width: 5.0),
+        GestureDetector(
+          onTap: onTap,
+          child: Text(
+            actionLabel,
+            style: AppTextStyles.purple20Bold,
+          ),
+        ),
+      ],
+    );
+  }
+}

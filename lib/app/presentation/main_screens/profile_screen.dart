@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopify_app/app/presentation/customer_screens/customer_order_screen.dart';
 import 'package:shopify_app/app/presentation/customer_screens/customer_wishlist_screen.dart';
@@ -255,7 +256,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               RepeatedListTileWidget(
                                 icon: Icons.logout,
                                 title: 'Log Out',
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await FirebaseAuth.instance.signOut();
+                                  Navigator.pushReplacementNamed(
+                                      context, '/welcome_screen');
+                                },
                               ),
                             ],
                           ),
