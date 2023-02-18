@@ -19,7 +19,7 @@ class _CustomerScreenState extends State<CustomerScreen> {
     const CategoryScreen(),
     StoreScreen(),
     CartScreen(),
-    const ProfileScreen(),
+    ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopify_app/app/constants/decoration/app_decoration.dart';
@@ -24,6 +27,9 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+
+  late String _uid;
+  bool processing = false;
   @override
   void initState() {
     _controller = AnimationController(
@@ -39,6 +45,9 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     _controller.dispose();
     super.dispose();
   }
+
+  CollectionReference customers =
+      FirebaseFirestore.instance.collection('customers');
 
   @override
   Widget build(BuildContext context) {
@@ -211,9 +220,26 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         color: Colors.lightBlueAccent,
                       ),
                       onPressed: () async {
+                        setState(() {
+                          processing = true;
+                        });
                         try {
-                          await FirebaseAuth.instance.signInAnonymously();
-                          print("Signed in with temporary account.");
+                          await FirebaseAuth.instance
+                              .signInAnonymously()
+                              .whenComplete(() async {
+                            _uid = FirebaseAuth.instance.currentUser!.uid;
+                            await customers.doc(_uid).set({
+                              'name': '',
+                              'email': '',
+                              'phone': '',
+                              'address': '',
+                              'profileImage': '',
+                              'cid': _uid,
+                            });
+                          });
+                          ;
+
+                          log("Signed in with temporary account.");
                         } on FirebaseAuthException catch (e) {
                           switch (e.code) {
                             case "operation-not-allowed":
