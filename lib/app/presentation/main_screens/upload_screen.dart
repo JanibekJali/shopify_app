@@ -1,0 +1,359 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:shopify_app/app/constants/colors/app_colors.dart';
+import 'package:shopify_app/app/utilities/categ_list.dart';
+
+class UploadScreen extends StatefulWidget {
+  const UploadScreen({super.key});
+
+  @override
+  State<UploadScreen> createState() => _UploadScreenState();
+}
+
+class _UploadScreenState extends State<UploadScreen> {
+  late double price;
+  late int quantity;
+  late String productName;
+  late String productDescription;
+  String mainCategValue = 'select category';
+  String subCategValue = 'subcategory';
+  List<String> subCategoryList = [];
+  final ImagePicker _picker = ImagePicker();
+  List<XFile> imagesFileList = [];
+  dynamic _pickedImageError;
+  Widget previewImages() {
+    if (imagesFileList.isNotEmpty) {
+      return ListView.builder(
+          itemCount: imagesFileList!.length,
+          itemBuilder: (context, index) {
+            return Image.file(
+              File(imagesFileList![index].path),
+            );
+          });
+    } else {
+      return Text(
+        'You have not \n \n picked images yet !',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 16),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          reverse: true,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    height: size.height * 0.30,
+                    width: size.width * 0.5,
+                    color: AppColors.blueGrey.shade100,
+                    child: Center(
+                      child: previewImages(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: size.height * 0.28,
+                    width: size.width * 0.5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              '* select main category',
+                              style: TextStyle(color: AppColors.red),
+                            ),
+                            DropdownButton(
+                              iconSize: 40,
+                              iconEnabledColor: AppColors.red,
+                              dropdownColor: AppColors.yellow.shade400,
+                              value: mainCategValue,
+                              items: maincateg
+                                  .map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem(
+                                  child: Text(value),
+                                  value: value,
+                                );
+                              }).toList(),
+                              onChanged: (String? value) {
+                                selectedMainCateg(value);
+                              },
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              '* select subcategory',
+                              style: TextStyle(color: AppColors.red),
+                            ),
+                            DropdownButton(
+                              iconSize: 40,
+                              iconEnabledColor: AppColors.red,
+                              iconDisabledColor: AppColors.black,
+                              dropdownColor: AppColors.yellow.shade400,
+                              value: subCategValue,
+                              items: subCategoryList
+                                  .map<DropdownMenuItem<String>>((value) {
+                                return DropdownMenuItem(
+                                  child: Text(value),
+                                  value: value,
+                                );
+                              }).toList(),
+                              onChanged: (String? value) {
+                                setState(() {
+                                  subCategValue = value!;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 30,
+                child: Divider(
+                  color: Colors.yellow,
+                  thickness: 1.5,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: size.width * 0.45,
+                  child: TextFormField(
+                    // onChanged: (value) {},
+                    onSaved: (value) {
+                      price = double.parse(value!);
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please enter price';
+                      } else if (value.isValidPrice() != true) {
+                        return 'Invalid Price';
+                      }
+                      return null;
+                    },
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    decoration: inputDecoration.copyWith(
+                      labelText: 'price',
+                      hintText: 'price .. \$',
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.45,
+                  child: TextFormField(
+                    onSaved: (value) {
+                      quantity = int.parse(value!);
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please enter quantity';
+                      } else if (value.isValidQuantity() != true) {
+                        return 'not valid quantity';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                    decoration: inputDecoration.copyWith(
+                      labelText: 'Quantity',
+                      hintText: 'Add Quantity',
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: TextFormField(
+                    onSaved: (value) {
+                      productName = value!;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please enter product name';
+                      } else {
+                        return null;
+                      }
+                    },
+                    maxLength: 100,
+                    maxLines: 3,
+                    decoration: inputDecoration.copyWith(
+                      labelText: 'product name',
+                      hintText: 'Enter product name',
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: TextFormField(
+                    onSaved: (value) {
+                      productDescription = value!;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'please enter description ';
+                      } else {
+                        return null;
+                      }
+                    },
+                    maxLength: 800,
+                    maxLines: 5,
+                    decoration: inputDecoration.copyWith(
+                      labelText: 'product description',
+                      hintText: ' Enter product description ',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: FloatingActionButton(
+              onPressed: imagesFileList.isEmpty
+                  ? () {
+                      pickProductImages();
+                    }
+                  : () {
+                      setState(() {});
+                      imagesFileList = [];
+                    },
+              backgroundColor:
+                  imagesFileList.isEmpty ? Colors.yellow : Colors.red,
+              child: imagesFileList.isEmpty
+                  ? Icon(
+                      Icons.photo_library,
+                      color: Colors.black,
+                    )
+                  : Icon(
+                      Icons.delete_forever,
+                      color: Colors.black,
+                    ),
+            ),
+          ),
+          FloatingActionButton(
+            backgroundColor: Colors.yellow,
+            onPressed: () {},
+            child: Icon(
+              Icons.upload,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void pickProductImages() async {
+    try {
+      final _pickedImage = await _picker.pickMultiImage(
+        imageQuality: 95,
+        maxHeight: 300,
+        maxWidth: 300,
+      );
+
+      setState(() {
+        imagesFileList = _pickedImage;
+      });
+    } catch (e) {
+      setState(() {
+        _pickedImageError = e;
+      });
+      log(_pickedImageError);
+    }
+  }
+
+  void selectedMainCateg(String? value) {
+    if (value == 'select category') {
+      subCategoryList = [];
+    } else if (value == 'men') {
+      subCategoryList = men;
+    } else if (value == 'women') {
+      subCategoryList = women;
+    } else if (value == 'electronics') {
+      subCategoryList = electronics;
+    } else if (value == 'accessories') {
+      subCategoryList = accessories;
+    } else if (value == 'shoes') {
+      subCategoryList = shoes;
+    } else if (value == 'home & garden') {
+      subCategoryList = homeandgarden;
+    } else if (value == 'beauty') {
+      subCategoryList = beauty;
+    } else if (value == 'kids') {
+      subCategoryList = kids;
+    } else if (value == 'bags') {
+      subCategoryList = bags;
+    }
+    setState(() {
+      mainCategValue = value!;
+      subCategValue = 'subcategory';
+    });
+  }
+}
+
+var inputDecoration = InputDecoration(
+  labelText: 'price',
+  hintText: 'price .. \$',
+  labelStyle: TextStyle(color: Colors.purple),
+  border: OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.yellow,
+      width: 1,
+    ),
+    borderRadius: BorderRadius.circular(10),
+  ),
+  focusedBorder: OutlineInputBorder(
+      borderSide: BorderSide(
+        color: Colors.blueAccent,
+        width: 1,
+      ),
+      borderRadius: BorderRadius.circular(10)),
+);
+
+extension PriceValidator on String {
+  bool isValidPrice() {
+    return RegExp(r'^((([1-9][0-9]*[\.]*)||([0][\.]))([0-9]{1,2}))$')
+        .hasMatch(this);
+  }
+}
+
+extension QuantityValidator on String {
+  bool isValidQuantity() {
+    return RegExp(r'^[1-9][0-9]*$').hasMatch(this);
+  }
+}

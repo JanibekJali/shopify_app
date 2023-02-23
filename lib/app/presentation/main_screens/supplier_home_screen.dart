@@ -3,6 +3,7 @@ import 'package:shopify_app/app/presentation/main_screens/category_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/dashboard_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/home_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/store_screen.dart';
+import 'package:shopify_app/app/presentation/main_screens/upload_screen.dart';
 
 class SupplierHomeScreen extends StatefulWidget {
   const SupplierHomeScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
     CategoryScreen(),
     StoreScreen(),
     DashboardScreen(),
-    Center(child: Text('upload')),
+    UploadScreen(),
   ];
   @override
   Widget build(BuildContext context) {

@@ -6,6 +6,7 @@ import 'package:shopify_app/app/presentation/auth/supplier_login.dart';
 import 'package:shopify_app/app/presentation/auth/supplier_signup.dart';
 import 'package:shopify_app/app/presentation/main_screens/customer_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/supplier_home_screen.dart';
+import 'package:shopify_app/app/presentation/main_screens/upload_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/welcome_screen.dart';
 
 void main() async {
@@ -21,9 +22,9 @@ class ShopifyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // home: CustomerRegisterScreen(),
+      home: UploadScreen(),
 
-      initialRoute: '/welcome_screen',
+      // initialRoute: '/welcome_screen',
       routes: {
         '/welcome_screen': (context) => WelcomeScreen(),
         '/customer_screen': (context) => CustomerScreen(),
