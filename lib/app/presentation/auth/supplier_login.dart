@@ -44,9 +44,15 @@ class _SuppliersLoginState extends State<SuppliersLogin> {
         Navigator.pushReplacementNamed(context, '/supplier_home_screen');
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
+          setState(() {
+            processing = false;
+          });
           MyMessageHandler.showSnackBar(
               _scaffoldKey, 'No user found for that email.');
         } else if (e.code == 'wrong-password') {
+          setState(() {
+            processing = false;
+          });
           MyMessageHandler.showSnackBar(
               _scaffoldKey, 'Wrong password provided for that user.');
         }

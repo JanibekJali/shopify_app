@@ -126,8 +126,6 @@ class _SuppliersSignUpState extends State<SuppliersSignUp> {
                 _scaffoldKey, 'The account already exists for that email.');
             log('The account already exists for that email.');
           }
-        } catch (e) {
-          log('$e');
         }
       } else {
         setState(() {
