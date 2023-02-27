@@ -6,8 +6,9 @@ import 'package:shopify_app/app/presentation/auth/supplier_login.dart';
 import 'package:shopify_app/app/presentation/auth/supplier_signup.dart';
 import 'package:shopify_app/app/presentation/main_screens/customer_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/supplier_home_screen.dart';
-import 'package:shopify_app/app/presentation/main_screens/upload_screen.dart';
 import 'package:shopify_app/app/presentation/main_screens/welcome_screen.dart';
+
+import 'app/presentation/main_screens/upload_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
