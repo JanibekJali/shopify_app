@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopify_app/app/presentation/galleries/men_gallery.dart';
 import 'package:shopify_app/app/presentation/widgets/fake_search_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,13 +36,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 RepeatedTabWidget(label: 'Beauty'),
               ]),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [
-            Center(child: Text('men screen')),
+            MenGallery(),
             Center(child: Text('women screen')),
             Center(child: Text('shoes screen')),
             Center(child: Text('bags screen ')),
-            Center(child: Text('electronics screen')),
+            Center(child: Text('Electr screen ')),
             Center(child: Text('accessories screen')),
             Center(child: Text('home & garden screen')),
             Center(child: Text('kids screen')),

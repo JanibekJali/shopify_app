@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,6 +10,7 @@ import 'package:path/path.dart';
 import 'package:shopify_app/app/constants/colors/app_colors.dart';
 import 'package:shopify_app/app/presentation/auth/auth_widgets/snack_bar_widget/my_message_handler.dart';
 import 'package:shopify_app/app/utilities/categ_list.dart';
+import 'package:uuid/uuid.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({super.key});
@@ -17,13 +20,16 @@ class UploadScreen extends StatefulWidget {
 }
 
 class _UploadScreenState extends State<UploadScreen> {
-  late double price = 90;
+  late double price;
   late int quantity;
   late String productName;
   late String productDescription;
+  late String productId;
+  bool proccesing = false;
   String mainCategValue = 'select category';
   String subCategValue = 'subcategory';
   List<String> subCategoryList = [];
+
   final ImagePicker _picker = ImagePicker();
   List<XFile> imagesFileList = [];
   List<String> imagesUrlList = [];
@@ -217,7 +223,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           }
                         },
                         maxLength: 800,
-                        maxLines: 5,
+                        maxLines: 2,
                         decoration: inputDecoration.copyWith(
                           labelText: 'product description',
                           hintText: ' Enter product description ',
@@ -262,10 +268,14 @@ class _UploadScreenState extends State<UploadScreen> {
               onPressed: () {
                 uploadProduct();
               },
-              child: Icon(
-                Icons.upload,
-                color: Colors.black,
-              ),
+              child: proccesing == true
+                  ? CircularProgressIndicator(
+                      color: AppColors.black,
+                    )
+                  : Icon(
+                      Icons.upload,
+                      color: Colors.black,
+                    ),
             ),
           ],
         ),
@@ -273,12 +283,15 @@ class _UploadScreenState extends State<UploadScreen> {
     );
   }
 
-  void uploadProduct() async {
+  Future<void> uploadImages() async {
     if (mainCategValue != 'select category' || subCategValue != 'subcategory') {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
 
         if (imagesFileList.isNotEmpty) {
+          setState(() {
+            proccesing = true;
+          });
           try {
             for (var image in imagesFileList) {
               firebase_storage.Reference reference = firebase_storage
@@ -294,17 +307,6 @@ class _UploadScreenState extends State<UploadScreen> {
           } catch (e) {
             log('$e');
           }
-          log('images picked');
-          log('$price');
-          log('$quantity');
-          log('$productName');
-          log('$productDescription');
-          setState(() {
-            imagesFileList = [];
-            mainCategValue = 'select category';
-            subCategValue = 'subcategory';
-          });
-          _formKey.currentState!.reset();
         } else {
           MyMessageHandler.showSnackBar(_scaffoldKey, 'Please pick images');
         }
@@ -314,6 +316,42 @@ class _UploadScreenState extends State<UploadScreen> {
     } else {
       MyMessageHandler.showSnackBar(_scaffoldKey, 'Please select category');
     }
+  }
+
+  void uploadData() async {
+    if (imagesUrlList.isNotEmpty) {
+      CollectionReference collectionReference =
+          FirebaseFirestore.instance.collection('products');
+      productId = Uuid().v4();
+      // FirebaseAuth.instance.currentUser!.uid;
+      await collectionReference.doc(productId).set({
+        'productId': productId,
+        'mainCategory': mainCategValue,
+        'subCategory': subCategValue,
+        'price': price,
+        'quantity': quantity,
+        'productName': productName,
+        'productDescription': productDescription,
+        'sID': FirebaseAuth.instance.currentUser!.uid,
+        'productImages': imagesUrlList,
+        'discount': 0,
+      }).whenComplete(() {
+        setState(() {
+          proccesing = false;
+          imagesFileList = [];
+          mainCategValue = 'select category';
+          subCategValue = 'subcategory';
+        });
+        _formKey.currentState!.reset();
+      });
+    }
+  }
+
+  void uploadProduct() async {
+    await uploadImages().whenComplete(() => uploadData());
+    setState(() {
+      proccesing = false;
+    });
   }
 
   Widget previewImages() {
